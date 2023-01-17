@@ -1,0 +1,89 @@
+<div class="container mt-5">
+    <h3>Create Appointment</h3>
+    <form [formGroup]="appointmentForm" (ngSubmit)="createAppointment()">
+        <div class="form-group">
+            <label for="patientName">Patient Name</label>
+            <input type="text" class="form-control" id="patientName" formControlName="patientName"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['patientName'].valid && appointmentForm.controls['patientName'].touched}">
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['patientName'].valid && appointmentForm.controls['patientName'].touched">
+                Patient Email is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="patientEmail">Patient Email</label>
+            <input type="email" class="form-control" id="patientEmail" formControlName="patientEmail"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['patientEmail'].valid && appointmentForm.controls['patientEmail'].touched}">
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['patientEmail'].valid && appointmentForm.controls['patientEmail'].touched">
+                Email is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="patientMobile">Patient Mobile</label>
+            <input type="text" class="form-control" id="patientMobile" formControlName="patientMobile"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['patientMobile'].valid && appointmentForm.controls['patientMobile'].touched}">
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['patientMobile'].valid && appointmentForm.controls['patientMobile'].touched">
+                Mobile number is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="patientDOB">Patient Date of Birth</label>
+            <input type="date" class="form-control" id="patientDOB" formControlName="patientDOB"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['patientDOB'].valid && appointmentForm.controls['patientDOB'].touched}">
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['patientDOB'].valid && appointmentForm.controls['patientDOB'].touched">
+                Date of birth is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="appointmentDate">Appointment Date</label>
+            <input type="date" class="form-control" id="appointmentDate" formControlName="appointmentDate"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['appointmentDate'].valid && appointmentForm.controls['appointmentDate'].touched}">
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['appointmentDate'].valid && appointmentForm.controls['appointmentDate'].touched">
+                Appointment date is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="doctorId">Doctor</label>
+            <select class="form-control" id="doctorId" formControlName="doctorId"
+                [ngClass]="{'is-invalid': !appointmentForm.controls['doctorId'].valid && appointmentForm.controls['doctorId'].touched}">
+                <option *ngFor="let doctor of doctors" [value]="doctor.id">{{ doctor.name }}
+                </option>
+            </select>
+            <div class="invalid-feedback"
+                *ngIf="!appointmentForm.controls['doctorId'].valid && appointmentForm.controls['doctorId'].touched">
+                Please select a doctor
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!appointmentForm.valid">Create Appointment</button>
+    </form>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th>Patient Email</th>
+                <th>Patient Mobile</th>
+                <th>Patient DOB</th>
+                <th>Appointment Date</th>
+                <th>Doctor</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments">
+                <td>{{ appointment.patientEmail }}</td>
+                <td>{{ appointment.patientMobile }}</td>
+                <td>{{ appointment.patientDOB | date }}</td>
+                <td>{{ appointment.appointmentDate | date }}</td>
+                <td>{{ appointment.doctor.name }}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="editAppointment(appointment)">Edit</button>
+                    <button class="btn btn-danger ml-3" (click)="deleteAppointment(appointment)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
